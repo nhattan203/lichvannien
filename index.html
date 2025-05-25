@@ -1,186 +1,91 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>📅 Lịch Ngày Hôm Nay</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>Đồng hồ LED siêu bự sinh động</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    :root {
-      --primary: #6C5CE7;
-      --background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
-      --text: #2d3436;
-      --card: #ffffff;
-      --highlight: #fd79a8;
-    }
-
-    * {
-      box-sizing: border-box;
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--background);
-      color: var(--text);
-      padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      color: var(--primary);
-      margin-bottom: 16px;
-    }
-
-    .info {
-      background: var(--card);
-      padding: 24px;
-      max-width: 400px;
-      margin: 0 auto 20px auto;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .info p {
-      font-size: 16px;
-      font-weight: 500;
-    }
-
-    nav {
-      margin-top: 20px;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--primary);
-      font-weight: bold;
-      margin: 0 10px;
-    }
-
-    .clock-section {
+      background: linear-gradient(to bottom, #000000, #0a0a0a 70%, #111);
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
-      margin-top: 20px;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .led-clock {
+    #clock {
+      font-size: 200px;
+      letter-spacing: 12px;
+      text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 60px #00ff00;
+      user-select: none;
+      animation: pulse 1s infinite ease-in-out;
+    }
+
+    #date {
+      margin-top: 30px;
       font-size: 36px;
-      font-weight: bold;
-      background: #111;
-      color: #0f0;
-      padding: 10px 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #0f0;
-      letter-spacing: 4px;
+      text-shadow: 0 0 10px #00ff00;
+      color: #8fff8f;
     }
 
-    .analog-clock {
-      width: 150px;
-      height: 150px;
-      border: 6px solid #6C5CE7;
-      border-radius: 50%;
-      position: relative;
-      margin: 0 auto;
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.03);
+      }
     }
 
-    .hand {
-      position: absolute;
-      width: 50%;
-      height: 2px;
-      background: #2d3436;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0% 50%;
-      transform: rotate(90deg);
+    @media (max-width: 768px) {
+      #clock {
+        font-size: 80px;
+        letter-spacing: 4px;
+      }
+
+      #date {
+        font-size: 20px;
+      }
     }
-
-    .hand.hour { width: 35%; height: 4px; background: #6C5CE7; }
-    .hand.minute { width: 45%; height: 3px; background: #00cec9; }
-    .hand.second { background: #d63031; }
-
-    @media (max-width: 600px) {
-      .info { padding: 16px; }
-      h1 { font-size: 20px; }
-      .info p { font-size: 14px; }
-      .led-clock { font-size: 28px; }
-    }
-  </style>
-</head>
-<body>
-  <h1>📅 Lịch Ngày Hôm Nay</h1>
-
-  <div class="info">
-    <p id="currentDate">📅 Hôm nay: ...</p>
-    <p id="weekNumber">🗓️ Tuần: ...</p>
-    <p id="daysLeft">📆 Còn ... ngày nữa là hết năm</p>
-    <p id="lunarDate">🌗 Âm lịch: ...</p>
-  </div>
-
-  <div class="clock-section">
-    <div class="analog-clock">
-      <div class="hand hour" id="hourHand"></div>
-      <div class="hand minute" id="minuteHand"></div>
-      <div class="hand second" id="secondHand"></div>
-    </div>
-
-    <div class="led-clock" id="ledClock">00:00:00</div>
-  </div>
-
-  <nav>
+      <nav>
     <a href="index.html">📅 Hôm nay</a>
     <a href="lich-thang.html">🗓️ Tháng</a>
   </nav>
+  </style>
+</head>
+<body>
+
+  <div id="clock">00:00:00</div>
+  <div id="date">Thứ Hai, 26 Tháng 5, 2025</div>
 
   <script>
-    const now = new Date();
-    const weekdays = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
-    document.getElementById("currentDate").textContent = `📅 Hôm nay: ${weekdays[now.getDay()]}, ${now.toLocaleDateString("vi-VN")}`;
-    const startOfYear = new Date(now.getFullYear(), 0, 1);
-    const weekNumber = Math.ceil((((now - startOfYear) / 86400000) + startOfYear.getDay() + 1) / 7);
-    document.getElementById("weekNumber").textContent = `🗓️ Tuần thứ: ${weekNumber}`;
-    const endOfYear = new Date(now.getFullYear(), 11, 31);
-    const daysLeft = Math.ceil((endOfYear - now) / 86400000);
-    document.getElementById("daysLeft").textContent = `📆 Còn ${daysLeft} ngày nữa là hết năm ${now.getFullYear()}`;
-
-    function updateClocks() {
+    function updateClock() {
       const now = new Date();
-      const h = now.getHours();
-      const m = now.getMinutes();
-      const s = now.getSeconds();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${h}:${m}:${s}`;
 
-      // LED clock
-      document.getElementById("ledClock").textContent =
-        `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      const weekdays = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+      const months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
 
-      // Analog clock
-      const hourDeg = (h % 12) * 30 + m * 0.5;
-      const minuteDeg = m * 6;
-      const secondDeg = s * 6;
-      document.getElementById("hourHand").style.transform = `rotate(${hourDeg}deg)`;
-      document.getElementById("minuteHand").style.transform = `rotate(${minuteDeg}deg)`;
-      document.getElementById("secondHand").style.transform = `rotate(${secondDeg}deg)`;
+      const day = weekdays[now.getDay()];
+      const date = now.getDate();
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
+
+      document.getElementById('date').textContent = `${day}, ${date} ${month}, ${year}`;
     }
 
-    updateClocks();
-    setInterval(updateClocks, 1000);
-
-    // Âm lịch
-    fetch('https://script.google.com/macros/s/AKfycbzk1k3wh6KS0B3yDJzZm07HTYgmkP6sGd0HzhAjN5Kh3bGlFJgRRa93aFHzdNCOP1fz/exec')
-      .then(res => res.json())
-      .then(data => {
-        const lunar = data.ngayAmLich;
-        const lunarNote = data.ngayDacBiet ? ` (${data.ngayDacBiet})` : '';
-        document.getElementById("lunarDate").textContent = `🌗 Âm lịch: ${lunar}${lunarNote}`;
-      })
-      .catch(() => {
-        document.getElementById("lunarDate").textContent = "⚠️ Không thể tải lịch âm";
-      });
+    updateClock();
+    setInterval(updateClock, 1000);
   </script>
+
 </body>
 </html>
