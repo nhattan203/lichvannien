@@ -34,6 +34,24 @@
       color: #8fff8f;
     }
 
+    nav {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    nav a {
+      color: #00ff00;
+      margin-left: 20px;
+      font-size: 18px;
+      text-decoration: none;
+      text-shadow: 0 0 6px #00ff00;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
     @keyframes pulse {
       0%, 100% {
         transform: scale(1);
@@ -52,14 +70,25 @@
       #date {
         font-size: 20px;
       }
+
+      nav {
+        top: 10px;
+        right: 10px;
+      }
+
+      nav a {
+        font-size: 14px;
+        margin-left: 10px;
+      }
     }
-      <nav>
-    <a href="index.html">📅 Hôm nay</a>
-    <a href="lich-thang.html">🗓️ Tháng</a>
-  </nav>
   </style>
 </head>
 <body>
+
+  <nav>
+    <a href="index.html">📅 Hôm nay</a>
+    <a href="lich-thang.html">🗓️ Tháng</a>
+  </nav>
 
   <div id="clock">00:00:00</div>
   <div id="date">Thứ Hai, 26 Tháng 5, 2025</div>
